@@ -3,40 +3,19 @@
 #include <stdio.h>
 
 /**
- * add_dnodeint_end - adds a new node at the end of a dlistint_t list
- * @head: pointer to the pointer of the head of the list
- * @n: value to be added to the new node
- *
- * Return: the address of the new element, or NULL if it failed
+ * free_dlistint - frees a dlistint_t list
+ * @head: pointer to the head of the list
  */
-dlistint_t *add_dnodeint_end(dlistint_t **head, const int n)
+void free_dlistint(dlistint_t *head)
 {
-    dlistint_t *new_node, *last;
+    dlistint_t *current, *next_node;
 
-    new_node = malloc(sizeof(dlistint_t));
-    if (new_node == NULL)
+    current = head;
+
+    while (current != NULL)
     {
-        fprintf(stderr, "Error: Can't malloc\n");
-        return (NULL);
+        next_node = current->next;
+        free(current);
+        current = next_node;
     }
-
-    new_node->n = n;
-    new_node->next = NULL;
-
-    if (*head == NULL)
-    {
-        new_node->prev = NULL;
-        *head = new_node;
-    }
-    else
-    {
-        last = *head;
-        while (last->next != NULL)
-            last = last->next;
-
-        last->next = new_node;
-        new_node->prev = last;
-    }
-
-    return (new_node);
 }
