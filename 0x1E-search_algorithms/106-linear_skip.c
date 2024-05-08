@@ -5,42 +5,41 @@
  *
  * @list: input list
  * @value: value to search in
- * Return: node containing the value, or NULL if not found
+ * Return: index of the number
  */
 skiplist_t *linear_skip(skiplist_t *list, int value)
 {
-    skiplist_t *current;
+	skiplist_t *move;
 
-    if (list == NULL)
-        return (NULL);
+	if (list == NULL)
+		return (NULL);
 
-    current = list;
+	move = list;
 
-    do {
-        list = current;
-        current = current->next;
-        printf("Value checked at index ");
-        printf("[%d] = [%d]\n", (int)current->index, current->n);
-    } while (current->next && current->n < value);
+	do {
+		list = move;
+		move = move->express;
+		printf("Value checked at index ");
+		printf("[%d] = [%d]\n", (int)move->index, move->n);
+	} while (move->express && move->n < value);
 
-    if (current->next == NULL)
-    {
-        list = current;
-        while (current->next)
-            current = current->next;
-    }
+	if (move->express == NULL)
+	{
+		list = move;
+		while (move->next)
+			move = move->next;
+	}
 
-    printf("Value found between indexes ");
-    printf("[%d] and [%d]\n", (int)list->index, (int)current->index);
+	printf("Value found between indexes ");
+	printf("[%d] and [%d]\n", (int)list->index, (int)move->index);
 
-    while (list != current->next)
-    {
-        printf("Value checked at index [%d] = [%d]\n", (int)list->index, list->n);
-        if (list->n == value)
-            return (list);
-        list = list->next;
-    }
+	while (list != move->next)
+	{
+		printf("Value checked at index [%d] = [%d]\n", (int)list->index, list->n);
+		if (list->n == value)
+			return (list);
+		list = list->next;
+	}
 
-    return (NULL);
+	return (NULL);
 }
-
